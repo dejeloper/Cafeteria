@@ -7,6 +7,10 @@
     <form method="POST" action="{{route('products.store')}}">
         @csrf
 
+        @if (session('success'))
+        <h6 class="alert alert-success">{{session('success')}}</h6>
+        @endif
+
         <div class="mb-3">
             <label for="nameProduct" class="form-label">Nombre del Producto</label>
             <div class="inputContainer">
@@ -77,5 +81,26 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
     </form>
+</div>
+
+<div class="container w-75 border p-4 mt-4">
+    <div>
+        @foreach ($products as $product)
+        <div class="row py-1">
+            <div class="col-md-9 d-flex align-items-center">
+                <a href="#}}">{{$product->name}}</a>
+            </div>
+
+            <div class="col-md-3 d-flex justify-content-center">
+                <form action="#}}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
 </div>
 @endsection

@@ -19,7 +19,8 @@ class ProductsController extends Controller
 
     public function index()
     {
-        return "hola";
+        $products = Product::all();
+        return view('Productos/index', ['products' => $products]);
     }
 
     public function store(Request $request)
@@ -39,12 +40,12 @@ class ProductsController extends Controller
         $product->price = $request->priceProduct;
         $product->weight = $request->weightProduct;
         $product->category = $request->categoryProduct;
-        $product->stock = $request->stockProduct; 
+        $product->stock = $request->stockProduct;
 
         if (!$product->save()) {
-            return redirect()->back()->with('Error', 'Falló la creación del Producto');
+            return redirect()->back()->with('error', 'Falló la creación del Producto');
         }
 
-        return redirect()->route('inicio')->with('Success', 'Producto creado correctamente');
+        return redirect()->route('products.index')->with('success', 'Producto creado correctamente');
     }
 }
