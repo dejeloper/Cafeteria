@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Inventario</a>
+                        <a class="nav-link" href="{{route('products.index')}}">Inventario</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Ventas</a>

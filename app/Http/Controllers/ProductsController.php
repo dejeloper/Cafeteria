@@ -20,7 +20,12 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('Productos/index', ['products' => $products]);
+        return view('productos/index', ['products' => $products]);
+    }
+
+    public function add()
+    {
+        return view('productos/add');
     }
 
     public function store(Request $request)
@@ -47,5 +52,44 @@ class ProductsController extends Controller
         }
 
         return redirect()->route('products.index')->with('success', 'Producto creado correctamente');
+    }
+
+
+
+    public function show($id)
+    {
+        $products = Product::find($id);
+        return view('productos/show', ['product' => $products]);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        $product->name = $request->nameProduct;
+        $product->reference = $request->referenceProduct;
+        $product->price = $request->priceProduct;
+        $product->weight = $request->weightProduct;
+        $product->category = $request->categoryProduct;
+        $product->stock = $request->stockProduct;
+
+        if (!$product->save()) {
+            return redirect()->back()->with('error', 'Falló la actualización del Producto');
+        }
+
+        return redirect()->route('products.index')->with('success', 'Producto actualizado correctamente');
+    }
+
+
+    public function destroy($id)
+    {
+        $product = Product::find($id);
+
+        if (!$product->delete()) {
+            return redirect()->route('products.index')->with('error', 'Falló la eliminación del Producto');
+        }
+
+        return redirect()->route('products.index')->with('success', 'Producto eliminado correctamente');
     }
 }
